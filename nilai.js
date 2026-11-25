@@ -10,37 +10,63 @@
 // =============================================================
 
 function hitungNilaiAkhir(tugas, uts, uas) {
-  // TODO: salin dari Lab 1
+const total = (0.3 * tugas) + (0.3 * uts) + (0.4 * uas);
+  return Math.round(total * 10) / 10;
   return 0;
 }
 
 function tentukanGrade(nilai) {
-  // TODO: salin dari Lab 1
+if (nilai >= 85) return 'A';
+  if (nilai >= 70) return 'B';
+  if (nilai >= 55) return 'C';
+  if (nilai >= 40) return 'D';
+  return 'E';
   return '?';
 }
 
 function buatRekap(daftar) {
-  // TODO: salin dari Lab 1 (map + spread, tambah nilaiAkhir, grade, lulus)
+return daftar.map((m) => {
+    const nilaiAkhir = hitungNilaiAkhir(m.tugas, m.uts, m.uas);
+    const grade = tentukanGrade(nilaiAkhir);
+    const lulus = nilaiAkhir >= 55;
+
+    return {
+      ...m,
+      nilaiAkhir,
+      grade,
+      lulus,
+    };
+  });
   return daftar;
 }
 
 function hitungRataRata(rekap) {
-  // TODO: salin dari Lab 1
+if (!Array.isArray(rekap) || rekap.length === 0) return 0;
+  const totalNilai = rekap.reduce((acc, m) => acc + m.nilaiAkhir, 0);
+  return Math.round((totalNilai / rekap.length) * 10) / 10;
   return 0;
 }
 
 function cariTertinggi(rekap) {
-  // TODO: salin dari Lab 1. Tambahkan: jika rekap kosong -> return null
+if (!Array.isArray(rekap) || rekap.length === 0) return null;
+  return rekap.reduce((tertinggi, m) => {
+    return m.nilaiAkhir > tertinggi.nilaiAkhir ? m : tertinggi;
+  }, rekap[0]);
   return null;
 }
 
 function hitungDistribusiGrade(rekap) {
-  // TODO: salin dari Lab 1
+const distribusi = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+  for (const m of rekap) {
+    distribusi[m.grade]++;
+  }
+  return distribusi;
   return { A: 0, B: 0, C: 0, D: 0, E: 0 };
 }
 
 function cariMahasiswa(rekap, kataKunci) {
-  // TODO: salin dari Lab 1
+const keyword = kataKunci.trim().toLowerCase();
+  return rekap.filter((m) => m.nama.toLowerCase().includes(keyword));
   return rekap;
 }
 
